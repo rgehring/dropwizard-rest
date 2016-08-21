@@ -4,6 +4,7 @@ package com.ryangehring.api.resources;
 import com.ryangehring.api.core.Saying;
 import com.ryangehring.api.database.SayingDAO;
 import com.codahale.metrics.annotation.Timed;
+import com.ryangehring.api.utils.ExperimentService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.PathParam ;
 import javax.ws.rs.core.MediaType;
+import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.Optional;
 import java.util.List;
@@ -32,7 +34,19 @@ public class SayingResource {
 
     @GET
     public List<Saying> getAll(){
-        return sayingDAO.getAll();
+
+        // get an experiment service instance
+        ExperimentService es = new ExperimentService() ;
+        Integer group = es.assignGroup( (float) Math.random()) ;
+
+        // render experiences based on experiment group
+        if (group==1) {
+            return sayingDAO.getAll();
+        }
+        List<Saying> fallback = new LinkedList<Saying>();
+        fallback.add( sayingDAO.find(1));
+        return fallback ;
+
     }
 
     @GET
