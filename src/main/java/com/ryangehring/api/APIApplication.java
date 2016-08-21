@@ -6,8 +6,13 @@ package com.ryangehring.api;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import com.ryangehring.api.resources.HelloResource;
+import com.ryangehring.api.resources.SayingResource;
 import com.ryangehring.api.health.TemplateHealthCheck;
+import io.dropwizard.jdbi.DBIFactory;
+import org.skife.jdbi.v2.DBI ;
+import com.ryangehring.api.database.SayingDAO ;
+import com.ryangehring.api.core.Saying ;
+
 
 public class APIApplication extends Application<APIConfiguration>{
 
@@ -28,15 +33,15 @@ public class APIApplication extends Application<APIConfiguration>{
     @Override
     public void run(APIConfiguration configuration,
                     Environment environment) {
-        final HelloResource resource = new HelloResource(
-                configuration.getTemplate(),
-                configuration.getDefaultName()
-        );
-        final TemplateHealthCheck healthCheck =
-                new TemplateHealthCheck(configuration.getTemplate());
-        environment.healthChecks().register("template", healthCheck);
 
-        environment.jersey().register(resource);
+        final DBIFactory factory = new DBIFactory();
+        final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "postgresql");
+        final SayingDAO dao = jdbi.onDemand(SayingDAO.class);
+        final SayingResource sayingResource = new SayingResource( dao ) ;
+
+        environment.jersey().register( sayingResource  );
+
+
     }
 
 
