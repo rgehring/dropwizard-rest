@@ -35,7 +35,9 @@ dependencies {
             'io.dropwizard:dropwizard-core:' + dropwizardVersion,
             'io.dropwizard:dropwizard-jdbi:' + dropwizardVersion,
             'io.dropwizard:dropwizard-migrations:' + dropwizardVersion,
-            'org.postgresql:postgresql:9.4.1209'
+            'io.dropwizard.modules:dropwizard-elasticsearch:' + dropwizardVersion+'-1',
+            'com.bendb.dropwizard:dropwizard-redis:' + dropwizardVersion+'-0',
+            'com.github.toastshaman:dropwizard-auth-jwt:' + dropwizardVersion+ "-0"
     )
     testCompile (
         'io.dropwizard:dropwizard-testing:' + dropwizardVersion

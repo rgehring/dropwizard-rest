@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 
 
-public class Saying {
+public class Product {
 
     @NotNull
     @JsonProperty
@@ -21,11 +21,11 @@ public class Saying {
     @JsonProperty
     private String content;
 
-    public Saying() {
+    public Product() {
         // Jackson deserialization
     }
 
-    public Saying(int id, String content) {
+    public Product(int id, String content) {
         this.id = id;
         this.content = content;
     }
@@ -41,9 +41,9 @@ public class Saying {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Saying)) return false;
+        if (!(o instanceof Product)) return false;
 
-        Saying that = (Saying) o;
+        Product that = (Product) o;
 
         if (!getId().equals(that.getId())) return false;
 

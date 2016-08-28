@@ -6,10 +6,10 @@ package com.ryangehring.api.health;
 
 import com.codahale.metrics.health.HealthCheck;
 
-public class TemplateHealthCheck extends HealthCheck {
+public class APIHealthCheck extends HealthCheck {
     private final String template;
 
-    public TemplateHealthCheck(String template) {
+    public APIHealthCheck(String template) {
         this.template = template;
     }
 
